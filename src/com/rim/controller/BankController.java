@@ -83,9 +83,10 @@ public class BankController {
 					bDto = bDao.select(hDto.getAccount(), conn);
 					result=0;
 					
-					if(hDto.getIo()==0 && bDto.getBalance()-hDto.getMoney()<0)
-						v.view("잔고가 부족합니다");
-					else
+					if(hDto.getIo()==0 && bDto.getBalance()-hDto.getMoney()<0) {
+						//출금시 출금하려는 액수가 잔고보다 많으면
+						v.view("잔고가 부족합니다"); //result는 그대로 0 -> 아래에서 exception 발생
+					}else
 						result = hDao.insert(hDto, conn);
 
 					if (result >= 1) {
@@ -116,11 +117,13 @@ public class BankController {
 				}
 
 			} else if (select == 4) {
+				//조회할 계좌 입력받고
 				String account = i.accountInput();
+				//어떤 조회를 할지 고르게하기 -> searchController로 이동
 				controller.searchSelect(account);
 
 			} else if (select == 5) {
-				conn.close();
+				conn.close(); //DB연결 끊기
 				v.view("프로그램 종료");
 				break;
 			} else
