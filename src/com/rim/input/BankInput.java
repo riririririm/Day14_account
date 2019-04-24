@@ -1,11 +1,15 @@
 package com.rim.input;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.rim.bankbook.BankbookDTO;
 import com.rim.history.HistoryDTO;
+import com.rim.member.MemberDAO;
 import com.rim.member.MemberDTO;
+import com.rim.util.DBConnector;
+import com.rim.util.Session;
 import com.rim.view.BankView;
 
 public class BankInput {
@@ -49,9 +53,11 @@ public class BankInput {
 		return account;				
 	}
 	
-	public MemberDTO memberInput() {
+	public String memberInput() {
 		//회원가입시 회원정보를 입력받는 메소드
 		MemberDTO dto = new MemberDTO();
+		MemberDAO dao = new MemberDAO();
+		String msg = null;
 		
 		v.view("ID: ");
 		dto.setId(sc.next());
@@ -64,16 +70,52 @@ public class BankInput {
 		v.view("이메일:");
 		dto.setEmail(sc.next());
 		
-		return dto;
+		int result=0;
+
+		try {
+			result = dao.insert(dto);
+			if(result>0)
+				msg="회원가입 성공";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			msg="회원가입 실패";
+		}
 		
+		return msg;
+		
+	}
+	
+	public String login() {
+		String msg = null;
+		MemberDTO dto = new MemberDTO();
+		MemberDAO dao = new MemberDAO();
+		
+		v.view("ID:");
+		dto.setId(sc.next());
+		v.view("PW:");
+		dto.setPw(sc.next());
+		
+		String message="로그인 실패";
+		try {
+			dto = dao.login(dto);
+			Session.member=dto;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(dto != null) {
+			message="로그인 성공";
+		}
+		return message;
 	}
 	
 	public BankbookDTO bankbookInput() {
 		//통장 개설시 통장 정보를 입력받는 메소드
 		BankbookDTO dto = new BankbookDTO();
 		
-		v.view("ID: ");
-		dto.setId(sc.next());
+		//v.view("ID: ");
+		dto.setId(((MemberDTO)Session.member).getId());
 		v.view("계좌번호:");
 		dto.setAccount(sc.next());
 		v.view("통장이름:");

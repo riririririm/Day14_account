@@ -25,7 +25,7 @@ public class MemberDAOTest {
 		dto.setPhone("010-1111-1111");
 		dto.setEmail("a@a.com");
 		
-		int result = dao.insert(dto, conn);
+		int result = dao.insert(dto);
 	}
 
 	

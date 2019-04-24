@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.rim.bankbook.BankbookDTO;
 import com.rim.history.HistoryDTO;
 import com.rim.history.HistoryDTO2;
+import com.rim.member.MemberDTO;
+import com.rim.util.Session;
 
 public class BankView {
 	
@@ -16,6 +18,16 @@ public class BankView {
 		System.out.println("통장이름: "+dto.getAcc_name());
 		System.out.println("잔고: "+dto.getBalance());
 		System.out.println("--------------------------------------");
+	}
+	
+	public void view() {
+		//myPage
+		MemberDTO dto = (MemberDTO)Session.member;
+		System.out.println("ID : "+dto.getId());
+		System.out.println("Name : "+dto.getName());
+		System.out.println("Phone : "+dto.getPhone());
+		System.out.println("Email : "+dto.getEmail());
+		System.out.println();
 	}
 	
 	public void view(String str) {
