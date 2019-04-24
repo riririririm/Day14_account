@@ -77,8 +77,16 @@ public class BankController {
 					conn = DBConnector.getConnector();
 					conn.setAutoCommit(false);
 
+					bDao = new BankbookDAO();
+					bDto = new BankbookDTO();
 					hDto = i.ioInput();
-					result = hDao.insert(hDto, conn);
+					bDto = bDao.select(hDto.getAccount(), conn);
+					result=0;
+					
+					if(hDto.getIo()==0 && bDto.getBalance()-hDto.getMoney()<0)
+						v.view("잔고가 부족합니다");
+					else
+						result = hDao.insert(hDto, conn);
 
 					if (result >= 1) {
 						if (hDto.getIo() == 1) {
@@ -102,6 +110,7 @@ public class BankController {
 					conn.commit();
 
 				} catch (Exception e) {
+					//e.printStackTrace();
 					v.view("입출금실패");
 					conn.rollback();
 				}

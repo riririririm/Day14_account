@@ -1,5 +1,6 @@
 package com.rim.input;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.rim.bankbook.BankbookDTO;
@@ -16,7 +17,30 @@ public class BankInput {
 		v = new BankView();
 	}
 	
+	public int monthInput() {
+		//n개월 간의 입출금 내역 조회시 개월 수를 입력받는 메소드
+		int month=0;
+		v.view("몇 개월 ?");
+		month = sc.nextInt();
+		
+		return month;
+	}
+	
+	public ArrayList<String> dateSearchInput() {
+		//기간별 조회시 사용자에게 조회할 기간 입력받는 메소드
+		ArrayList<String> date = new ArrayList<String>();
+		
+		v.view("조회할 기간을 입력하세요");
+		v.view("시작날짜:");
+		date.add(sc.next());
+		v.view("마지막 날짜:");
+		date.add(sc.next());
+		
+		return date;
+	}
+	
 	public String accountInput() {
+		//조회할 계좌번호를 입력받는 메소드
 		String account=null;
 		
 		v.view("조회하실 계좌번호:");
@@ -26,6 +50,7 @@ public class BankInput {
 	}
 	
 	public MemberDTO memberInput() {
+		//회원가입시 회원정보를 입력받는 메소드
 		MemberDTO dto = new MemberDTO();
 		
 		v.view("ID: ");
@@ -44,6 +69,7 @@ public class BankInput {
 	}
 	
 	public BankbookDTO bankbookInput() {
+		//통장 개설시 통장 정보를 입력받는 메소드
 		BankbookDTO dto = new BankbookDTO();
 		
 		v.view("ID: ");
@@ -58,6 +84,8 @@ public class BankInput {
 	}
 	
 	public HistoryDTO ioInput() {
+		//입금할지 출금할지를 입력받고
+		//입출금을 할 계좌번호와 금액을 입력받는 메소드
 		v.view("1.입금 / 2.출금");
 		HistoryDTO dto = new HistoryDTO();
 		

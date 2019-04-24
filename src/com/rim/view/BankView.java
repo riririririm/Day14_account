@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.rim.bankbook.BankbookDTO;
 import com.rim.history.HistoryDTO;
+import com.rim.history.HistoryDTO2;
 
 public class BankView {
 	
@@ -39,5 +40,25 @@ public class BankView {
 	public void view(ArrayList<HistoryDTO> arr) {
 		for(HistoryDTO dto: arr)
 			view(dto);
+	}
+	
+	public void view2(ArrayList<HistoryDTO2> arr) {
+		for(HistoryDTO2 dto: arr)
+			view2(dto);
+	}
+	
+	public void view2 (HistoryDTO2 dto) {
+		String str = null;
+		
+		System.out.println("계좌번호: "+dto.getAccount());
+		System.out.println("거래날짜: "+dto.getIo_date());
+		if(dto.getIo()==1)
+			str="입금";
+		else if(dto.getIo()==0)
+			str="출금";
+		System.out.println("입/출: "+str);
+		System.out.println(str+"액: "+dto.getMoney());
+		System.out.println("잔액: "+dto.getBalance());
+		System.out.println("--------------------------------------");
 	}
 }
